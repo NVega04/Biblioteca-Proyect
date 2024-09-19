@@ -1,62 +1,76 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-:root{
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
     --basico-color: rgba(44, 125, 131, 0.849);
     --background-color: rgb(236, 233, 233);
     --dark-color: black;
 }
+
 /*Estructura general*/
-html{
+html {
     font-size: 62.5%;
     font-family: 'poppins', sans-serif;
 }
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-/*Diseñi de parte de atención al cliente*/
-.atencion{
+
+/*Diseño de parte de atención al cliente*/
+.atencion {
     max-width: 120rem;
     margin: 0 auto;
 }
-.atencion-cliente{
+
+.atencion-cliente {
     background-color: var(--basico-color);
 }
-.cliente{
+
+.cliente {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 2rem 0;
 }
-.cliente{
+
+.cliente {
     display: flex;
     align-items: center;
     gap: 2rem;
 }
-.cliente i{
+
+.cliente i {
     font-size: 2rem;
 }
-.cliente-soporte{
+
+.cliente-soporte {
     display: flex;
     flex-direction: column;
     color: aliceblue;
     font-size: small;
 }
+
 .cliente i {
     color: aliceblue;
 }
+
 .logotipo {
     display: flex;
     align-items: center;
     gap: 2rem;
     color: aliceblue;
 }
-.logotipo h1 a{
+
+.logotipo h1 a {
     text-decoration: none;
     color: rgb(255, 255, 255);
     font-size: 35px;
     letter-spacing: -1px;
+    text-transform: uppercase;
 }
+
 /*Diseño del usuario*/
 .usuario {
     display: flex;
@@ -65,35 +79,43 @@ html{
     color: aliceblue;
     font-size: small;
 }
-.usuario i{
+
+.usuario i {
     font-size: 2rem;
 }
-.usuario .fa-user{
+
+.usuario .fa-user {
     border-right: 1px solid aliceblue;
     padding-right: 2.5rem;
 
 }
+
 /*Diseño del menú*/
 .contenedor-menu {
     background-color: var(--background-color);
 }
+
 .menu-contenedor {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 4rem;
 }
-.menu-contenedor .fa-bars{
+
+.menu-contenedor .fa-bars {
     display: none;
 }
+
 .menu {
     display: flex;
     gap: 4rem;
 }
+
 .menu li {
     list-style: none;
 }
-.menu a{
+
+.menu a {
     text-decoration: none;
     font-size: 1.3rem;
     color: var(--dark-color);
@@ -101,6 +123,7 @@ html{
     text-transform: uppercase;
     position: relative;
 }
+
 .menu a::after {
     content: '';
     width: 1.5rem;
@@ -109,18 +132,21 @@ html{
     position: absolute;
     bottom: -3px;
     left: 50%;
-    transform: translate(-50%,50%);
+    transform: translate(-50%, 50%);
     opacity: 0;
     transition: all .3s ease;
 }
-.menu a:hover::after{
+
+.menu a:hover::after {
     opacity: 1;
 }
-.menu a:hover{
+
+.menu a:hover {
     color: aliceblue;
 }
+
 /*Diseño del panel de busqueda*/
-.buscar{
+.buscar {
     position: relative;
     display: flex;
     align-items: center;
@@ -130,6 +156,7 @@ html{
     height: 4.4rem;
     overflow: hidden;
 }
+
 .buscar input {
     outline: none;
     font-family: inherit;
@@ -140,10 +167,12 @@ html{
     color: black;
     cursor: pointer;
 }
-.buscar input::-webkit-search-cancel-button{
+
+.buscar input::-webkit-search-cancel-button {
     appearance: none;
 }
-.buscar .boton-buscar{
+
+.buscar .boton-buscar {
     border: none;
     background-color: var(--basico-color);
     display: flex;
@@ -151,4 +180,61 @@ html{
     justify-content: center;
     height: 100%;
     padding: 1rem;
+}
+
+/*Diseño imagen*/
+.panel {
+    background-image: linear-gradient(100deg, black, #00000020), url('portada.jpg');
+    height: 50rem;
+    background-size: cover;
+    background-position: center;
+}
+/*Diseño de letras sobre la imagen*/
+.contenido-panel {
+    max-width: 150rem;
+    margin: 0 auto;
+    padding: 20rem 2rem;
+}
+.contenido-panel p {
+    color: aliceblue;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.contenido-panel h2{
+    color:aliceblue;
+    font-size: 5.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+.formulario {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items:center;
+    padding: 1rem 4rem;
+    font-size: 20px;
+    border: 10px solid var(--basico-color);
+}
+.formulario input {
+    padding: 8px 80px;
+    border-radius: 8px;
+}
+.formulario button{
+    position: relative;
+    text-align: center;
+    border: 3px solid rgb(7, 108, 122);
+    border-radius: 9rem;
+    height: 40px;
+    width: 80px;
+    overflow: hidden;
+    background-color: var(--basico-color);
+    color: aliceblue;
+    font-weight: bolder;
+}
+.formulario label {
+    display: block;
 }
