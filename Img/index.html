@@ -13,10 +13,10 @@
         <div class="atencion-cliente">
             <div class="atencion cliente">
                 <div class="cliente">
-                    <i class="fa-solid fa-phone"></i>
+                    <i class="fa-solid fa-location-dot"></i>
                     <div class="cliente-soporte">
-                        <span class="text">Solicita tu libro</span>
-                        <span class="number">+57 346 098 78 67</span>
+                        <span class="text">Biblioteca</span>
+                        <span class="number">Calle 1 #12-13a</span>
                     </div>
                 </div>
                 <div class="logotipo">
@@ -49,7 +49,59 @@
             </nav>
         </div>
     </header>
+
+    <section class="panel">
+        <div class="contenido-panel">
+            <p>Encuentra lo que buscas</p>
+            <h2><b>Elige tu libro</b></h2>
+        </div>
+    </section>
     <script src="https://kit.fontawesome.com/e7588334ab.js" crossorigin="anonymous"></script>
+    <form id="formulario" class="formulario">
+        <div>
+            <label for=""><b>ISBN</b></label>
+            <input type="text" placeholder="Código de libro" />
+        </div>
+        <div>
+            <label for=""><b>Título</b></label>
+            <input type="text" placeholder="Titulo" />
+        </div>
+        <div>
+            <label for=""><b>Autor</b></label>
+            <input type="email" placeholder="Autor" />
+        </div>
+        <div>
+            <label for=""><b>Fecha de edición</b></label>
+            <input type="text" placeholder="Fecha de edicion" />
+        </div>
+        <div>
+            <label for=""><b>Número de páginas</b></label>
+            <input type="text" placeholder="Número de paginas" />
+        </div>
+        <div>
+            <label for=""><b>Ejemplares disponibles</b></label>
+            <input type="text" placeholder="Ejemplares disponibles" />
+        </div>
+        <div>
+            <label for=""><b>Sinopsis</b></label>
+            <input type="text" placeholder="Sinopsis" />
+        </div>
+        <div>
+            <label for=""><b>Tipo de ejemplar fisico o digital</b></label>
+            <input type="text" placeholder="Tipo de ejemplar" />
+        </div>
+        <div>
+            <label for=""><b>Categoría</b></label>
+            <input type="text" placeholder="Categoria" />
+        </div>
+        <button class="boton"> Enviar </button>
+    </form>
+    <script>
+        fetch('https://backend-production-3a6e.up.railway.app/api/autor/getLibAut')
+            .then(respuesta=>respuesta.json())
+            .then(datos=>console.log(datos))
+    </script>
+
 </body>
 
 </html>
