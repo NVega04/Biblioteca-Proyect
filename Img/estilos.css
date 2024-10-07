@@ -238,3 +238,11 @@ html {
 .formulario label {
     display: block;
 }
+#table {
+    padding: 60px;
+}
+#titulo {
+    background-color: var(--basico-color);
+    color: aliceblue;
+    height: 30px;
+}

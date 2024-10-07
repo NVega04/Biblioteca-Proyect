@@ -96,10 +96,50 @@
         </div>
         <button class="boton"> Enviar </button>
     </form>
+    <table id="table" border="1" border-spacing="6" width="100%" align="center">
+        <tr id="titulo">
+            <th>Id Libro</th>
+            <th>ISBN Libro</th>
+            <th>Autor</th>
+            <th>Titulo</th>
+        </tr>
+        <tbody id="books">
+
+        </tbody>
     <script>
-        fetch('https://backend-production-3a6e.up.railway.app/api/autor/getLibAut')
-            .then(respuesta=>respuesta.json())
-            .then(datos=>console.log(datos))
+        const booksTable = document.querySelector('#books');
+
+        fetch('https://openlibrary.org/search.json?author=mario%20mendoza')
+            .then(respuesta => respuesta.json())
+            .then(mostrarLibros)
+            
+
+        function mostrarLibros(response) {
+            const libros = response.docs;
+
+            libros.forEach(libro => {
+                const tr = document.createElement('tr');
+
+                const idColumn = document.createElement('td');
+                idColumn.textContent = libro.key;
+                tr.appendChild(idColumn);
+
+                const isbnColumn = document.createElement('td');
+                isbnColumn.textContent = libro.isbn ? libro.isbn[0] : '';
+                tr.appendChild(isbnColumn);
+
+                const authorColumn = document.createElement('td');
+                authorColumn.textContent = libro.author_name[0];
+                tr.appendChild(authorColumn);
+
+
+                const titleColumn = document.createElement('td');
+                titleColumn.textContent = libro.title;
+                tr.appendChild(titleColumn);
+
+                booksTable.appendChild(tr);
+            });
+        }
     </script>
 
 </body>
