@@ -18,6 +18,10 @@ html {
     box-sizing: border-box;
 }
 
+header {
+    position: sticky;
+}
+
 /*Diseño de parte de atención al cliente*/
 .atencion {
     max-width: 120rem;
@@ -240,7 +244,14 @@ html {
 }
 #table {
     padding: 60px;
+    font-size: 20px;
+    text-align: center;
 }
+
+#table tr {
+    height: 50px;
+}
+
 #titulo {
     background-color: var(--basico-color);
     color: aliceblue;

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioCenter</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <header>
+        <div class="atencion-cliente">
+            <div class="atencion cliente">
+                <div class="cliente">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div class="cliente-soporte">
+                        <span class="text">Biblioteca</span>
+                        <span class="number">Calle 1 #12-13a</span>
+                    </div>
+                </div>
+                <div class="logotipo">
+                    <i class="fa-regular fa-bookmark"></i>
+                    <h1 class="logo"><a href="/">BiblioCenter</a></h1>
+                </div>
+                <div class="usuario">
+                    <i class="fa-solid fa-user"></i>
+                    <div class="iniciar-sesion">
+                        <span class="text">Inicia sesión</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contenedor-menu">
+            <nav class="menu-contenedor">
+                <i class="fa-solid fa-bars"></i>
+                <ul class="menu">
+                    <li><a href="index.html">INICIO</a></li>
+                    <li><a href="libros.html">LIBROS</a></li>
+                    <li><a href="autores.html">AUTORES</a></li>
+                </ul>
+                <form class="buscar" id="boton-buscar">
+                    <input type="search" placeholder="Busca tu libro" id="dato-buscado" />
+                    <button class="boton-buscar" >
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </nav>
+        </div>
+    </header>
+
+    <section class="panel">
+        <div class="contenido-panel">
+            <p>Gestiona tus autores</p>
+            <h2><b>Crea, consulta, actualiza y elimina autores</b></h2>
+        </div>
+    </section>
+    <script src="https://kit.fontawesome.com/e7588334ab.js" crossorigin="anonymous"></script>
+    <form id="formulario" class="formulario" action="/autores" method="post">
+        <div>
+            <label for=""><b>Nombres</b></label>
+            <input type="text" placeholder="Nombres" name="nombres" />
+        </div>
+        <div>
+            <label for=""><b>Apellidos</b></label>
+            <input type="text" placeholder="Apellidos" name="apellidos" />
+        </div>
+        <div>
+            <label for=""><b>Fecha publicación</b></label>
+            <input type="date" placeholder="Fecha primer libro" name="fecha_publicacion" />
+        </div>
+        <div>
+            <label for=""><b>Premios</b></label>
+            <input type="text" placeholder="Premios obtenidos" name="premios" />
+        </div>
+        <div>
+            <label for=""><b>Fecha nacimiento</b></label>
+            <input type="date" placeholder="Fecha nacimiento" name="fecha_nacimiento" />
+        </div>
+        <div>
+            <label for=""><b> Fecha fallecimiento</b></label>
+            <input type="date" placeholder="No poner si no aplica" name="fecha_fallecimiento" />
+        </div>
+
+        <button class="boton"> Crear autor </button>
+    </form>
+    <table id="table" border="1" border-spacing="6" width="100%" align="center">
+        <tr id="titulo">
+            <th>Nombres autor</th>
+            <th>Apellidos autor</th>
+            <th>Fecha publicación primer libro</th>
+            <th>Premios</th>
+            <th>Eliminar</th>
+        </tr>
+        <tbody id="autores">
+
+        </tbody>
+    </table>
+
+    <script>
+        const autorTable = document.querySelector('#autores');
+
+        //Post para guardar datos en autores del formulario de crear autores
+
+        const form = document.getElementById("formulario");
+        form.addEventListener('submit', enviarForms);
+
+        async function enviarForms(e) {
+            e.preventDefault();
+            const datos = new FormData(form);
+
+            const response = await fetch('/autores', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(Object.fromEntries(datos)),
+            });
+            if (response.status == 201) {
+                alert("Autor creado con éxito")
+                window.location.reload();
+            }
+        }
+
+        //Get para mostrar autores
+
+        fetch('/autores')
+            .then(response => response.json())
+            .then(mostrarAutores)
+
+        function mostrarAutores(autores) {
+            autores.forEach(autor => {
+                const tr = document.createElement('tr');
+
+                const nombresColumn = document.createElement('td');
+                nombresColumn.textContent = autor.nombres;
+                tr.appendChild(nombresColumn);
+
+                const apellidosColumn = document.createElement('td');
+                apellidosColumn.textContent = autor.apellidos;
+                tr.appendChild(apellidosColumn);
+
+                const fechaColumn = document.createElement('td');
+                fechaColumn.textContent = autor.fecha_publicacion;
+                tr.appendChild(fechaColumn);
+
+                const premiosColumn = document.createElement('td');
+                premiosColumn.textContent = autor.premios;
+                tr.appendChild(premiosColumn);
+
+                const eliminar = document.createElement('td');
+                const btn = document.createElement('button');
+                btn.textContent = "Eliminar";
+                btn.onclick = () => borrarAutor(autor._id);
+                eliminar.appendChild(btn);
+                tr.appendChild(eliminar);
+
+                autorTable.appendChild(tr);
+            })
+        }
+
+        //Delete para borrar autores
+
+        async function borrarAutor(id) {
+                const response = await fetch('/autores/' + id, {
+                    method: 'DELETE',
+                })
+                if (response.status == 204) {
+                    alert("Autor eliminado con éxito")
+                    window.location.reload();
+                }
+            }
+
+            //Get para buscar autores
+
+            const boton = document.getElementById("boton-buscar");
+            boton.addEventListener('submit', buscarAutor);
+
+            const dato = document.getElementById("dato-buscado");
+
+            async function buscarAutor(e) {
+                e.preventDefault();
+                const response = await fetch('/autores/buscar?nombres=' + dato.value);
+                const autores = await response.json();
+                autorTable.innerHTML = "";
+                mostrarAutores(autores);
+            }
+        </script>
+    </script>
+</body>

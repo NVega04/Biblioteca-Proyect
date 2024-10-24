@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioCenter</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <header>
+        <div class="atencion-cliente">
+            <div class="atencion cliente">
+                <div class="cliente">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div class="cliente-soporte">
+                        <span class="text">Biblioteca</span>
+                        <span class="number">Calle 1 #12-13a</span>
+                    </div>
+                </div>
+                <div class="logotipo">
+                    <i class="fa-regular fa-bookmark"></i>
+                    <h1 class="logo"><a href="/">BiblioCenter</a></h1>
+                </div>
+                <div class="usuario">
+                    <i class="fa-solid fa-user"></i>
+                    <div class="iniciar-sesion">
+                        <span class="text">Inicia sesión</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contenedor-menu">
+            <nav class="menu-contenedor">
+                <i class="fa-solid fa-bars"></i>
+                <ul class="menu">
+                    <li><a href="index.html">INICIO</a></li>
+                    <li><a href="libros.html">LIBROS</a></li>
+                    <li><a href="autores.html">AUTORES</a></li>
+                </ul>
+                <form class="buscar" id="boton-buscar">
+                    <input type="search" placeholder="Busca tu libro por ISBN" id="dato-buscado" />
+                    <button class="boton-buscar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </nav>
+        </div>
+    </header>
+
+    <section class="panel">
+        <div class="contenido-panel">
+            <p>Gestiona tus libros</p>
+            <h2><b>Crea, consulta, actualiza y elimina libros</b></h2>
+        </div>
+    </section>
+    <script src="https://kit.fontawesome.com/e7588334ab.js" crossorigin="anonymous"></script>
+    <form id="formulario" class="formulario" action="/libros" method="post">
+        <div>
+            <label for=""><b>ISBN</b></label>
+            <input type="text" placeholder="Código de libro" name="isbn" />
+        </div>
+        <div>
+            <label for=""><b>Título</b></label>
+            <input type="text" placeholder="Titulo" name="titulo" />
+        </div>
+        <div>
+            <label for=""><b>Autor</b></label>
+            <input type="text" placeholder="Autor" name="autor" />
+        </div>
+        <div>
+            <label for=""><b>Fecha de edición</b></label>
+            <input type="date" placeholder="Fecha de edicion" name="fecha_edicion" />
+        </div>
+        <div>
+            <label for=""><b>Número de páginas</b></label>
+            <input type="text" placeholder="Número de paginas" name="numero_paginas" />
+        </div>
+        <div>
+            <label for=""><b> Cantidad de ejemplares</b></label>
+            <input type="text" placeholder="Ejemplares disponibles" name="cantidad_ejemplares" />
+        </div>
+        <div>
+            <label for=""><b> Ejemplares disponibles (cantidad) </b></label>
+            <input type="text" placeholder="Ejemplares disponibles" name="ejemplares_disponibles" />
+        </div>
+        <div>
+            <label for=""><b>Sinopsis</b></label>
+            <input type="text" placeholder="Sinopsis" name="sinopsis" />
+        </div>
+        <div>
+            <label for=""><b>Tipo de presentación</b></label>
+            <input type="text" placeholder="Tipo de ejemplar" name="presentacion_libro" />
+        </div>
+        <div>
+            <label for=""><b>Tipo de literatura (genero)</b></label>
+            <input type="text" placeholder="Categoria" name="genero" />
+        </div>
+        <button class="boton"> Crear libro </button>
+    </form>
+    <table id="table" border="1" border-spacing="6" width="100%" align="center">
+        <tr id="titulo">
+            <th>Id Libro</th>
+            <th>ISBN Libro</th>
+            <th>Autor</th>
+            <th>Titulo</th>
+            <th>Eliminar</th>
+        </tr>
+        <tbody id="books">
+
+        </tbody>
+        <script>
+            const booksTable = document.querySelector('#books');
+
+            // Post para guardar información de formulario de creación de libros
+
+            const form = document.getElementById("formulario");
+            form.addEventListener('submit', enviarForms);
+
+            async function enviarForms(e) {
+                e.preventDefault();
+                const datos = new FormData(form);
+
+                const response = await fetch('/libros', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(datos)),
+                });
+                if (response.status == 201) {
+                    alert("Libro creado con éxito")
+                    window.location.reload();
+                }
+            }
+
+            //Get para mostrar libros guardados en libros
+
+            fetch('/libros')
+                .then(response => response.json())
+                .then(mostrarLibros)
+
+            function mostrarLibros(libros) {
+                libros.forEach(libro => {
+                    const tr = document.createElement('tr');
+
+                    const idColumn = document.createElement('td');
+                    idColumn.textContent = libro._id;
+                    tr.appendChild(idColumn);
+
+                    const isbnColumn = document.createElement('td');
+                    isbnColumn.textContent = libro.isbn;
+                    tr.appendChild(isbnColumn);
+
+                    const authorColumn = document.createElement('td');
+                    authorColumn.textContent = libro.autor;
+                    tr.appendChild(authorColumn);
+
+                    const titleColumn = document.createElement('td');
+                    titleColumn.textContent = libro.titulo;
+                    tr.appendChild(titleColumn);
+
+                    const eliminar = document.createElement('td');
+                    const btn = document.createElement('button');
+                    btn.textContent = "Eliminar";
+                    btn.onclick = () => borrarLibro(libro._id);
+                    eliminar.appendChild(btn);
+                    tr.appendChild(eliminar);
+
+                    booksTable.appendChild(tr);
+                })
+            }
+
+            // Delete para eliminar libros
+
+            async function borrarLibro(id) {
+                const response = await fetch('/libros/' + id, {
+                    method: 'DELETE',
+                })
+                if (response.status == 204) {
+                    alert("Libro eliminado con éxito")
+                    window.location.reload();
+                }
+            }
+
+            //Get para buscar libros
+
+            const boton = document.getElementById("boton-buscar");
+            boton.addEventListener('submit', buscarLibro);
+
+            const dato = document.getElementById("dato-buscado");
+
+            async function buscarLibro(e) {
+                e.preventDefault();
+                const response = await fetch('/libros/buscar?isbn=' + dato.value);
+                const libros = await response.json();
+                booksTable.innerHTML = "";
+                mostrarLibros(libros);
+            }
+        </script>

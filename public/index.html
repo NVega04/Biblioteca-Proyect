@@ -35,10 +35,9 @@
             <nav class="menu-contenedor">
                 <i class="fa-solid fa-bars"></i>
                 <ul class="menu">
-                    <li><a href="#">INICIO</a></li>
-                    <li><a href="#">LIBROS</a></li>
-                    <li><a href="#">ARTICULOS INVESTIGACIÓN</a></li>
-                    <li><a href="#">BIBLIOTECAS</a></li>
+                    <li><a href="index.html">INICIO</a></li>
+                    <li><a href="libros.html">LIBROS</a></li>
+                    <li><a href="autores.html">AUTORES</a></li>
                 </ul>
                 <form class="buscar">
                     <input type="search" placeholder="Busca tu libro" />
@@ -57,46 +56,8 @@
         </div>
     </section>
     <script src="https://kit.fontawesome.com/e7588334ab.js" crossorigin="anonymous"></script>
-    <form id="formulario" class="formulario">
-        <div>
-            <label for=""><b>ISBN</b></label>
-            <input type="text" placeholder="Código de libro" />
-        </div>
-        <div>
-            <label for=""><b>Título</b></label>
-            <input type="text" placeholder="Titulo" />
-        </div>
-        <div>
-            <label for=""><b>Autor</b></label>
-            <input type="email" placeholder="Autor" />
-        </div>
-        <div>
-            <label for=""><b>Fecha de edición</b></label>
-            <input type="text" placeholder="Fecha de edicion" />
-        </div>
-        <div>
-            <label for=""><b>Número de páginas</b></label>
-            <input type="text" placeholder="Número de paginas" />
-        </div>
-        <div>
-            <label for=""><b>Ejemplares disponibles</b></label>
-            <input type="text" placeholder="Ejemplares disponibles" />
-        </div>
-        <div>
-            <label for=""><b>Sinopsis</b></label>
-            <input type="text" placeholder="Sinopsis" />
-        </div>
-        <div>
-            <label for=""><b>Tipo de ejemplar fisico o digital</b></label>
-            <input type="text" placeholder="Tipo de ejemplar" />
-        </div>
-        <div>
-            <label for=""><b>Categoría</b></label>
-            <input type="text" placeholder="Categoria" />
-        </div>
-        <button class="boton"> Enviar </button>
-    </form>
-    <table id="table" border="1" border-spacing="6" width="100%" align="center">
+    
+    <table id="table" border="1" border-spacing="2" width="100%" align="center">
         <tr id="titulo">
             <th>Id Libro</th>
             <th>ISBN Libro</th>
@@ -108,6 +69,8 @@
         </tbody>
     <script>
         const booksTable = document.querySelector('#books');
+
+// Consumo de API para muestra de información de libros en página principal
 
         fetch('https://openlibrary.org/search.json?author=mario%20mendoza')
             .then(respuesta => respuesta.json())
